@@ -137,11 +137,11 @@ end
 
 # ----- Receipt -----
 
-get '/parties/:id/receipt' do 
+get '/parties/:id/receipt' do
     @party = Party.find(params[:id])
   @filename = "party_#{ @party.id }_table_#{ @party.table_number.to_s}"
   @receipt = erb(:receipt_text, :layout=>nil)
-  File.write("public/receipts/#{ @filename }", @receipt)
+  File.write("./public/receipts/#{ @filename }", @receipt)
   erb :receipt
 end
 

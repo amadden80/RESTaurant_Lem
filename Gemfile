@@ -5,5 +5,3 @@ gem 'sinatra-activerecord'
 gem 'pg'
 
 gem 'pry'
-
-gem 'better_errors'
