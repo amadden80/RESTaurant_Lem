@@ -1,0 +1,21 @@
+
+<h2><a href="/parties/new">NEW PARTY</a></h2>
+
+
+<% @parties.each do |party| %>
+  <div class='party'>
+    <a href="/parties/<%= party.id %>">
+      <button>
+        <%= party.table_number %>
+      </button>
+    </a>
+    <ul>
+      <% party.orders.each do |order| %>
+        <li class="<%= order.is_free ? "for-free" : "for-charge"%>">
+          <%= order.food %>
+        </li>
+      <% end %>
+    </ul>
+    <p>$<%= party.total_dollars %></p>
+  </div>
+<% end %>

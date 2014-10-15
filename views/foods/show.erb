@@ -1,0 +1,23 @@
+
+<h2><%= @food.name %></h2>
+<h3><%= @food.cents %></h3>
+
+
+<form action="/foods/<%= @food.id %>/edit" method="get">
+  <button type="submit" class='btn-clear'>
+      edit: <i class="fa fa-pencil-square-o"></i>
+  </button>
+</form>
+
+<form action="/foods/<%= @food.id %>" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class='btn-clear'>
+      delete: <i class="fa fa-trash-o"></i>
+  </button>
+</form>
+
+<ul>
+  <% @food.parties.each do |party| %>
+    <%= party %>
+  <% end %>
+</ul>

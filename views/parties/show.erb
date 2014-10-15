@@ -1,0 +1,84 @@
+
+<h2>Table <%= @party.table_number %> - (<%= @party.num_guests %> guests)</h2>
+
+<% unless @party.is_paid %>
+  <form action="/parties/<%= @party.id %>/edit" method="get">
+    <button type="submit" class='btn-clear'>
+        edit: <i class="fa fa-pencil-square-o"></i>
+    </button>
+  </form>
+
+  <form action="/parties/<%= @party.id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" class='btn-clear'>
+        delete: <i class="fa fa-trash-o"></i>
+    </button>
+  </form>
+<% end %>
+
+
+<% unless @party.is_paid %>
+  <span class='food-select'>
+    <% @foods.each do |food| %>
+      <form action="/orders" method="post">
+        <input type="hidden" name="party_id" value='<%= @party.id %>'>
+        <input type="hidden" name="food_id" value='<%= food.id %>'>
+        <button type='submit' class='food-item'>
+          <%= food  %>
+        </button>
+      </form>
+    <% end %>
+  </span>
+<% end %>
+
+
+
+<table>
+  <% @party.orders.each do |order| %>
+    <tr>
+      <td>
+        <%= order.food.name %>
+      </td>
+      <td>
+        $<%= order.is_free ? 0 : order.food.cost_dollars %>
+      </td>
+      <td>
+        <form action="/orders/<%= order.id %>" method="post">
+          <input type="hidden" name="_method" value="patch">
+          <input type="hidden" name="party_id" value="<%= @party.id %>">
+          <button type="submit" class='btn-clear'>
+              Charge? $<%= order.is_free ? order.food.cost_dollars : 0 %>
+          </button>
+        </form>
+      </td>
+
+      <% unless @party.is_paid %>
+        <td>
+          <form action="/orders/<%= order.id %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="hidden" name="party_id" value="<%= @party.id %>">
+            <button type="submit" class='btn-clear'>
+              Remove:   <i class="fa fa-trash-o"></i>
+            </button>
+          </form>
+        </td>
+      <% end %>
+
+    </tr>
+  <% end %>
+</table>
+
+
+<a href="/parties/<%= @party.id %>/receipt">
+  <button>
+      Receipt
+  </button>
+</a>
+
+
+
+<a href="/">
+  <button>
+      Home
+  </button>
+</a>

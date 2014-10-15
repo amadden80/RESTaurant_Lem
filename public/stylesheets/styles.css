@@ -1,0 +1,64 @@
+
+body{
+  font-family: 'Roboto', sans-serif;
+  background: url(/vendor/restaurant_icons/restaurant_icons.png);
+}
+h1, h2{
+  font-family: 'Alegreya', serif;
+}
+h3, th{
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.btn-clear{
+   border:0;
+   background: none;
+}
+
+
+a{
+  text-decoration: none;
+  color: black;
+}
+
+
+
+.header{
+  background-color: lightyellow;
+}
+.header a{
+  border: 1px solid magenta;
+  width: 10em;
+  padding-left: 2em;
+  display: inline-block
+}
+
+
+.food-item{
+  width: 15em;
+  height: 3em;
+}
+
+.party{
+  display: inline-block;
+  border: 1px solid brown;
+  border-radius: 5%;
+  padding: 0.5em;
+  margin: 1em;
+}
+
+@media (max-width: 600px) {
+  table{
+    background-color: lightyellow;
+  }
+  td{
+    border: 1px solid grey;
+  }
+  .header a{
+    margin-top: 0.5em;
+    border: 1px solid black;
+    background-color: magenta;
+    width: 100%;
+    display: block;
+  }
+}

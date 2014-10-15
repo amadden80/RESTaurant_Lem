@@ -1,0 +1,19 @@
+
+We hope you enjoyed your <%= @party.foods.sample.name %>!
+
+-----------------------------
+
+<% @party.orders.each do |order| %>
+  - <%= order.food %>   <%= "...No Charge" if order.is_free %>
+<% end %>
+
+-----------------------------
+
+Tip Suggestions:
+  15%: $<%= @party.tip(0.15) %>
+  20%:  $<%= @party.tip(0.2) %>
+  25%:   $<%= @party.tip(0.25) %>
+
+-----------------------------
+
+THANK YOU

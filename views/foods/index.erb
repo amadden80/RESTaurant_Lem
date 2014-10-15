@@ -1,0 +1,64 @@
+
+<h2>Food Items</h2>
+
+<table>
+  <thead>
+    <th>
+      Name
+    </th>
+    <th>
+      Cuisine
+    </th>
+    <th>
+      $
+    </th>
+    <th>
+      Edit
+    </th>
+    <th>
+      Delete
+    </th>
+  </thead>
+  <tbody>
+    <% @foods.each do |food| %>
+      <tr>
+        <td>
+          <a href="/foods/<%= food.id %>">
+            <%= food.name %>
+          </a>
+        </td>
+        <td>
+          <%= food.cuisine %>
+        </td>
+        <td>
+          <%= food.cost_dollars %>
+        </td>
+        <td>
+          <form action="/foods/<%= food.id %>/edit" method="get">
+            <button type="submit" class='btn-clear'>
+                <i class="fa fa-pencil-square-o"></i>
+            </button>
+          </form>
+        </td>
+        <td>
+          <form action="/foods/<%= food.id %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class='btn-clear'>
+                <i class="fa fa-trash-o"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <a href="/foods/new">...new item?</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,63 @@
+<h2>Parties</h2>
+
+<table>
+  <thead>
+    <th>
+      Table Number
+    </th>
+    <th>
+      Num Guests
+    </th>
+    <th>
+      Total
+    </th>
+    <th>
+      Edit
+    </th>
+    <th>
+      Delete
+    </th>
+  </thead>
+  <tbody>
+    <% @parties.each do |party| %>
+      <tr>
+        <td>
+          <a href="/parties/<%= party.id %>">
+            <%= party.table_number %>
+          </a>
+        </td>
+        <td>
+          <%= party.num_guests %>
+        </td>
+        <td>
+          $<%= party.total_dollars %>
+        </td>
+        <td>
+          <form action="/parties/<%= party.id %>/edit" method="get">
+            <button type="submit" class='btn-clear'>
+                <i class="fa fa-pencil-square-o"></i>
+            </button>
+          </form>
+        </td>
+        <td>
+          <form action="/parties/<%= party.id %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class='btn-clear'>
+                <i class="fa fa-trash-o"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <a href="/parties/new">...new party?</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

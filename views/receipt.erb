@@ -1,0 +1,24 @@
+
+
+<h3>
+  <%= @party.table_number %>
+</h3>
+
+<div>
+  <%= @receipt.gsub("\n", "</br>") %>
+</div>
+
+<a href="/receipts/<%= @filename %>" >
+  <button type='submit'>
+      Download
+  </button>
+</a>
+
+<% unless @party.is_paid %>
+  <form action="/parties/<%= @party.id %>/checkout" method="post">
+    <input type="hidden" name="_method" value="patch">
+    <button type="submit">
+      Checkout
+    </button>
+  </form>
+<% end %>

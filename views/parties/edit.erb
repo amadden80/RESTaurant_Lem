@@ -1,0 +1,9 @@
+
+<h2><%= @party.table_number %></h2>
+
+<form action="/parties/<%= @party.id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <input type="number" name="party[table_number]" value='<%= @party.table_number %>'>
+  <input type="number" name="party[num_guests]" value='<%= @party.num_guests %>'>
+  <input type="submit">
+</form>
