@@ -25,7 +25,7 @@ namespace :db do
     puts '...Creating the "foods" table'
     puts '...Creating the "orders" table'
     conn = PG::Connection.open(dbname: 'restaurant')
-    conn.exec("CREATE TABLE parties (id SERIAL PRIMARY KEY, table_number INTEGER, num_guests INTEGER, is_paid BOOLEAN);")
+    conn.exec("CREATE TABLE parties (id SERIAL PRIMARY KEY, table_number INTEGER, num_guests INTEGER, is_paid BOOLEAN, is_satisified BOOLEAN);")
     conn.exec("CREATE TABLE foods (id SERIAL PRIMARY KEY, name VARCHAR(255), cuisine VARCHAR(255), cents INTEGER);")
     conn.exec("CREATE TABLE orders (id SERIAL PRIMARY KEY, food_id INTEGER, party_id INTEGER, is_free BOOLEAN, timestamp TIMESTAMP);")
     conn.close

@@ -16,11 +16,25 @@ ActiveRecord::Base.establish_connection({
 })
 
 
+# ***** SESSIONS *****
+enable :sessions
+
+
+
+before '/*' do
+  if request.path_info != "/"
+    redirect '/' if  request.cookies["RESTaurant-jar"] != "Who stole the cookie from the cookie jar... YOU"
+  end
+end
+
+
+
 # ***** ROUTES *****
 
 # Displays links to navigate the application (including links to each current parties)
 get '/' do
   @parties = Party.all.select {|party| party.is_open? }
+  response.set_cookie "RESTaurant-jar", "Who stole the cookie from the cookie jar... YOU"
   erb :index
 end
 
@@ -94,7 +108,13 @@ get '/parties/:id/edit' do
 end
 
 patch '/parties/:id' do
+
   party = Party.find(params[:id])
+
+  if message = params['personal-message']
+    session['message_'+ party.id.to_s ] = message
+  end
+
   party.update(params['party'])
   redirect "/parties/#{ party.id }"
 end
@@ -138,8 +158,9 @@ end
 # ----- Receipt -----
 
 get '/parties/:id/receipt' do
-    @party = Party.find(params[:id])
+  @party = Party.find(params[:id])
   @filename = "party_#{ @party.id }_table_#{ @party.table_number.to_s}"
+  @personal_message = session['message_'+ @party.id.to_s ] || "Thank You."
   @receipt = erb(:receipt_text, :layout=>nil)
   File.write("./public/receipts/#{ @filename }", @receipt)
   erb :receipt
@@ -147,6 +168,7 @@ end
 
 patch "/parties/:id/checkout" do
   party = Party.find(params[:id])
+  session['message_'+ @party.id.to_s ] = nil
   party.update({is_paid: true})
   redirect '/'
 end
