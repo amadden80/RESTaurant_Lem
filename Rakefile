@@ -41,11 +41,7 @@ namespace :db do
   desc "create junk data for development"
   task :junk_data do
 
-    ActiveRecord::Base.establish_connection({
-      adapter: 'postgresql',
-      database: 'restaurant'
-    })
-
+    require_relative 'connection'
     require_relative 'models/food'
     require_relative 'models/party'
     require_relative 'models/order'
@@ -84,5 +80,6 @@ namespace :receipts do
   task :delete do
     `rm -r public/receipts`
     `mkdir public/receipts`
+    `echo "gitkeep" >> public/receipts/.gitkeep`
   end
 end

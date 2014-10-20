@@ -11,8 +11,14 @@
 </head>
 <body>
 
-  <%= erb :_header %>
+  <% if session[:notice] %>
+    <div class="notice">
+      <%= session[:notice] %>
+      <% session[:notice]=nil # Clear notice once displayed %>
+    </div>
+  <% end %>
 
+  <%= erb :_header %>
   <%= yield %>
 
 </body>

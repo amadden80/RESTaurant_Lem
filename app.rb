@@ -10,18 +10,15 @@ require_relative 'models/order'
 
 
 # ***** DATABASE *****
-ActiveRecord::Base.establish_connection({
-  adapter: 'postgresql',
-  database: 'restaurant'
-})
+require_relative 'connection'
 
 
 # ***** SESSIONS *****
 enable :sessions
 
 
-
-before '/*' do
+# ***** Cookies *****
+before do
   if request.path_info != "/"
     redirect '/' if  request.cookies["RESTaurant-jar"] != "Who stole the cookie from the cookie jar... YOU"
   end
@@ -29,18 +26,15 @@ end
 
 
 
-# ***** ROUTES *****
+# ********** ROUTES **********
 
-# Displays links to navigate the application (including links to each current parties)
 get '/' do
   @parties = Party.all.select {|party| party.is_open? }
   response.set_cookie "RESTaurant-jar", "Who stole the cookie from the cookie jar... YOU"
   erb :index
 end
 
-
 # ----- Food CRUD -----
-
 get '/foods' do
   @foods = Food.all
   erb :'foods/index'
@@ -137,7 +131,11 @@ end
 post '/orders' do
   party = Party.find(params['party_id'])
   food = Food.find(params['food_id'])
-  Order.create({party: party, food: food})
+  begin
+    Order.create({party: party, food: food})
+  rescue Order::ClosedPartyFoodError
+    session[:notice] = "You can't add food to a paid order."
+  end
   redirect "/parties/#{ party.id }"
 end
 
@@ -168,7 +166,7 @@ end
 
 patch "/parties/:id/checkout" do
   party = Party.find(params[:id])
-  session['message_'+ @party.id.to_s ] = nil
+  session['message_'+ party.id.to_s ] = nil
   party.update({is_paid: true})
   redirect '/'
 end

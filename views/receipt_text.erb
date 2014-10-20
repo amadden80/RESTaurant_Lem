@@ -8,6 +8,8 @@ We hope you enjoyed your <%= @party.foods.sample.name %>!
 <% end %>
 
 -----------------------------
+Total: $<%= @party.total_dollars %>
+-----------------------------
 
 Tip Suggestions:
   15%: $<%= @party.tip(0.15) %>

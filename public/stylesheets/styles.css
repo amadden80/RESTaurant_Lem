@@ -47,6 +47,13 @@ a{
   margin: 1em;
 }
 
+.notice{
+  color: yellow;
+  background-color: red;
+  width: 100%;
+  margin-bottom:1em;
+}
+
 @media only screen
 and (min-device-width : 320px)
 and (max-device-width : 568px) {

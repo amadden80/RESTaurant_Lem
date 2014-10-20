@@ -1,5 +1,4 @@
 
-
 <h3>
   <%= @party.table_number %>
 </h3>
@@ -7,6 +6,8 @@
 <div>
   <%= @receipt.gsub("\n", "</br>") %>
 </div>
+
+</br>
 
 <a href="/receipts/<%= @filename %>" >
   <button type='submit'>
